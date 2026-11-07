@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException, Depends
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -64,6 +64,22 @@ async def read_root():
         with open("index.html", "r", encoding="utf-8") as f:
             return f.read()
     return "<h1>ChargeClaims B2B SaaS</h1><p>index.html bulunamadı.</p>"
+
+@app.get("/auth")
+async def shopify_auth(shop: str):
+    api_key = os.getenv("SHOPIFY_API_KEY", "167b2638a7aace33b2fd6acc92ac54")
+    scopes = "read_orders,write_orders,read_customers"
+    redirect_uri = "https://chargeclaims.onrender.com/auth/callback"
+    auth_url = f"https://{shop}/admin/oauth/authorize?client_id={api_key}&scope={scopes}&redirect_uri={redirect_uri}"
+    return RedirectResponse(auth_url)
+
+@app.get("/auth/callback")
+async def shopify_auth_callback(shop: str, code: str):
+    return {
+        "status": "success",
+        "shop": shop,
+        "message": "Shopify yetkilendirmesi başarıyla tamamlandı!"
+    }
 
 @app.get("/disputes")
 async def get_disputes():

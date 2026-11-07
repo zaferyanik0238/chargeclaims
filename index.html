@@ -1,201 +1,227 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChargeClaims - Otonom Dispute Yönetimi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans p-6">
-
-    <div class="max-w-5xl mx-auto space-y-8">
+    <title>ChargeClaims - Automated Dispute & Chargeback Management for Shopify</title>
+    <style>
+        :root {
+            --primary: #5b21b6;
+            --primary-hover: #4c1d95;
+            --bg-dark: #0f172a;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+            --accent: #10b981;
+        }
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* Header */
+        header {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background-color: var(--primary-hover); }
         
-        <!-- Üst Başlık -->
-        <header class="flex justify-between items-center border-b border-slate-800 pb-5">
-            <div>
-                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-                    ChargeClaims B2B SaaS
-                </h1>
-                <p class="text-slate-400 text-sm mt-1">Shopify Satıcıları İçin Otonom İtiraz & Savunma Platformu</p>
-            </div>
-            <span class="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-500/20">
-                ● Canlı Ortam Simülasyonu
-            </span>
+        /* Hero Section */
+        .hero {
+            padding: 96px 0 64px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn-secondary {
+            border: 1px solid #475569;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .micro-text {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 96px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .pricing-card.popular {
+            border-color: var(--accent);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: var(--accent);
+            color: #000;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+        .price {
+            font-size: 44px;
+            font-weight: 800;
+            margin: 16px 0;
+        }
+        .price span { font-size: 16px; color: var(--text-muted); }
+        .commission-rate {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+            flex-grow: 1;
+        }
+        .features-list li {
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+        .features-list li::before {
+            content: "✓ ";
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="#" class="logo">Charge<span>Claims</span></a>
+            <a href="#pricing" class="btn-primary">Get Started</a>
         </header>
 
-        <!-- Dashboard / İstatistik Panosu -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/60 shadow-lg">
-                <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Toplam İtiraz</p>
-                <h2 id="total-disputes" class="text-3xl font-bold text-blue-400 mt-2">0</h2>
+        <section class="hero">
+            <h1>Stop Losing Revenue to Fraudulent Chargebacks</h1>
+            <p>Protect your Shopify store with automated, AI-driven dispute management. Win back your money with zero hassle and zero risk.</p>
+            <div class="hero-cta">
+                <a href="#pricing" class="btn-primary">Start Risk-Free Today</a>
+                <a href="#demo" class="btn-secondary">Book a 10-Min Demo</a>
             </div>
-            <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/60 shadow-lg">
-                <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Başarıyla Çözülen</p>
-                <h2 id="resolved-disputes" class="text-3xl font-bold text-emerald-400 mt-2">0</h2>
-            </div>
-            <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/60 shadow-lg">
-                <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Kurtarılan Tutar (Tahmini)</p>
-                <h2 id="saved-amount" class="text-3xl font-bold text-indigo-400 mt-2">$0.00</h2>
-            </div>
+            <p class="micro-text">No credit card required • Instantly connects to Shopify</p>
         </section>
 
-        <!-- Form Alanları (Kayıt & Tetikleme) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- 1. Mağaza Bağlama -->
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                <h3 class="text-lg font-bold text-white mb-4">1. Shopify Mağazanızı Bağlayın</h3>
-                <form id="storeForm" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Mağaza Adı (Shop Domain)</label>
-                        <input type="text" id="shop_domain" value="zafer yanık" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">E-posta Adresi</label>
-                        <input type="email" id="email" value="zaferyanik038@gmail.com" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Shopify Access Token</label>
-                        <input type="text" id="access_token" value="shpat_ornektoken123" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-lg text-sm transition">
-                        Mağazayı Kaydet & Bağla
-                    </button>
-                </form>
-                <p id="storeResult" class="mt-3 text-xs font-medium hidden"></p>
-            </div>
-
-            <!-- 2. Webhook Tetikleme -->
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-2">2. Canlı Dispute Simülatörü</h3>
-                    <p class="text-xs text-slate-400 mb-6">Shopify'dan gelecek bir dispute olayını simüle edin. Sistem Shopify API'den veriyi çekecek, PDF hazırlayıp e-posta gönderecektir.</p>
-                    <button id="btnTrigger" onclick="triggerWebhook()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-lg text-sm transition">
-                        Dispute Webhook Tetikle (Simüle Et)
-                    </button>
+        <section class="pricing" id="pricing">
+            <h2 class="section-title">Flexible Pricing Built for Growth</h2>
+            <div class="pricing-grid">
+                
+                <!-- Starter Plan -->
+                <div class="pricing-card">
+                    <h3>Starter (Risk-Free)</h3>
+                    <div class="price">$0 <span>/ month</span></div>
+                    <div class="commission-rate">+15% Success Fee (Only when you win)</div>
+                    <ul class="features-list">
+                        <li>Automated Evidence Collection</li>
+                        <li>Standard Dispute Templates</li>
+                        <li>Basic Email Support</li>
+                        <li>Shopify App Integration</li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="text-align: center;">Start Free</a>
                 </div>
-                <div class="mt-4">
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Son İşlem Çıktısı:</label>
-                    <pre id="webhookResult" class="bg-slate-950 p-3 rounded-lg text-xs font-mono text-emerald-400 overflow-x-auto max-h-40 border border-slate-800">Bekleniyor...</pre>
+
+                <!-- Growth Plan -->
+                <div class="pricing-card popular">
+                    <span class="popular-badge">Most Popular</span>
+                    <h3>Growth</h3>
+                    <div class="price">$49 <span>/ month</span></div>
+                    <div class="commission-rate">+5% Success Fee</div>
+                    <ul class="features-list">
+                        <li>AI-Powered Custom Disputes</li>
+                        <li>Automated Bank Submission</li>
+                        <li>Priority Support</li>
+                        <li>Advanced Analytics Dashboard</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="text-align: center;">Start 14-Day Free Trial</a>
                 </div>
-            </div>
 
-        </div>
+                <!-- Enterprise Plan -->
+                <div class="pricing-card">
+                    <h3>Enterprise / Scale</h3>
+                    <div class="price">$149 <span>/ month</span></div>
+                    <div class="commission-rate">0% Commission (Unlimited Disputes)</div>
+                    <ul class="features-list">
+                        <li>Unlimited Dispute Submissions</li>
+                        <li>Dedicated Account Manager</li>
+                        <li>Custom API Integration</li>
+                        <li>High-Volume Fraud Protection</li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="text-align: center;">Contact Sales</a>
+                </div>
 
-        <!-- Canlı İtiraz Geçmişi Tablosu -->
-        <section class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-            <h3 class="text-lg font-bold text-white mb-4">📋 Otonom İşlenen İtiraz Geçmişi</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-900 text-slate-400 border-b border-slate-700">
-                        <tr>
-                            <th class="p-3">Dispute ID</th>
-                            <th class="p-3">Sipariş ID</th>
-                            <th class="p-3">Durum</th>
-                            <th class="p-3">Oluşturulma Tarihi</th>
-                            <th class="p-3">PDF Rapor Konumu</th>
-                        </tr>
-                    </thead>
-                    <tbody id="disputesTableBody" class="divide-y divide-slate-700/50 text-slate-300">
-                        <tr>
-                            <td colspan="5" class="p-4 text-center text-slate-500">Yükleniyor...</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
-
     </div>
 
-    <script>
-        // Form Kayıt İşlemi
-        document.getElementById('storeForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const shop_domain = document.getElementById('shop_domain').value;
-            const email = document.getElementById('email').value;
-            const access_token = document.getElementById('access_token').value;
-            const resEl = document.getElementById('storeResult');
-
-            try {
-                const response = await fetch('/register-seller', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ shop_domain, email, access_token })
-                });
-                const data = await response.json();
-                resEl.className = "mt-3 text-xs font-medium text-emerald-400 block";
-                resEl.innerText = "Başarılı! " + data.message;
-            } catch (err) {
-                resEl.className = "mt-3 text-xs font-medium text-red-400 block";
-                resEl.innerText = "Hata oluştu.";
-            }
-        });
-
-        // Webhook Tetikleme İşlemi
-        async function triggerWebhook() {
-            const resultEl = document.getElementById('webhookResult');
-            const shop_domain = document.getElementById('shop_domain').value;
-            resultEl.innerText = "İşleniyor...";
-
-            try {
-                const response = await fetch('/webhook/shopify/dispute', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        dispute_id: "disp_" + Math.floor(100000 + Math.random() * 900000),
-                        order_id: "ord_" + Math.floor(10000 + Math.random() * 90000),
-                        shop_domain: shop_domain
-                    })
-                });
-                const data = await response.json();
-                resultEl.innerText = JSON.stringify(data, null, 2);
-                
-                // Tabloyu ve istatistikleri güncelle
-                loadDashboardData();
-            } catch (err) {
-                resultEl.innerText = "İstek sırasında hata oluştu.";
-            }
-        }
-
-        // Dashboard Verilerini Çekme
-        async function loadDashboardData() {
-            try {
-                const response = await fetch('/disputes');
-                const data = await response.json();
-
-                if (data.status === "success") {
-                    document.getElementById('total-disputes').innerText = data.total_count;
-                    document.getElementById('resolved-disputes').innerText = data.total_count;
-                    document.getElementById('saved-amount').innerText = "$" + (data.total_count * 149.99).toFixed(2);
-
-                    const tbody = document.getElementById('disputesTableBody');
-                    tbody.innerHTML = "";
-
-                    if (data.disputes.length === 0) {
-                        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">Henüz işlenmiş bir dispute kaydı yok.</td></tr>`;
-                        return;
-                    }
-
-                    data.disputes.forEach(item => {
-                        const row = `
-                            <tr class="hover:bg-slate-800/30 transition">
-                                <td class="p-3 font-mono font-semibold text-blue-400">${item.dispute_id}</td>
-                                <td class="p-3 font-mono">${item.order_id}</td>
-                                <td class="p-3"><span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">${item.status}</span></td>
-                                <td class="p-3 text-slate-400">${item.created_at}</td>
-                                <td class="p-3 font-mono text-slate-400">${item.pdf_path}</td>
-                            </tr>
-                        `;
-                        tbody.innerHTML += row;
-                    });
-                }
-            } catch (err) {
-                console.error("Dashboard yükleme hatası:", err);
-            }
-        }
-
-        // Sayfa ilk yüklendiğinde verileri getir
-        window.onload = loadDashboardData;
-    </script>
 </body>
 </html>

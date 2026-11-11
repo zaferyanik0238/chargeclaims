@@ -1,72 +1,30 @@
-<<<<<<< HEAD
-import time
+import os
+import requests
 
-def get_mock_dispute_data(dispute_id: str):
+SHOPIFY_API_VERSION = "2024-01"
+
+def verify_shopify_webhook(data: bytes, hmac_header: str) -> bool:
     """
-    Shopify'dan gelen dispute ve kargo kanıtı verilerini simüle eder.
+    Verify incoming Shopify webhook signature for security.
     """
-    return {
-        "dispute_id": dispute_id,
-        "order_id": "ORD-99281",
-        "customer_name": "Ahmet Yılmaz",
-        "customer_email": "ahmet@example.com",
-        "amount": "149.99 USD",
-        "reason": "Unrecognized charge / Fraudulent",
-        "tracking_number": "TR-987654321",
-        "carrier": "Yurtici Kargo",
-        "fulfillment_status": "Delivered",
-        "delivery_date": "2026-11-06 14:30"
+    # Placeholder for webhook verification logic
+    return True
+
+def get_order_details(shop_url: str, access_token: str, order_id: str) -> dict:
+    """
+    Fetch order details from Shopify API for dispute automation.
+    """
+    url = f"https://{shop_url}/admin/api/{SHOPIFY_API_VERSION}/orders/{order_id}.json"
+    headers = {
+        "X-Shopify-Access-Token": access_token,
+        "Content-Type": "application/json"
     }
-
-
-def submit_dispute_evidence(dispute_id: str, pdf_path: str, access_token: str):
-    """
-    Oluşturulan PDF savunma dosyasını Shopify Dispute API'ye otonom sunar.
-    """
-    print(f"[OTONOM API] '{pdf_path}' dosyası Shopify Dispute API'ye yükleniyor...")
-    time.sleep(1)
     
-    print(f"[OTONOM API] Dispute {dispute_id} için kanıtlar bankaya başarıyla teslim edildi!")
-    return {
-        "submission_status": "submitted",
-        "dispute_id": dispute_id,
-        "submitted_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "evidence_file": pdf_path,
-        "message": "Savunma dosyası ve kargo kanıtları bankaya otonom olarak iletildi."
-=======
-import time
-
-def get_mock_dispute_data(dispute_id: str):
-    """
-    Shopify'dan gelen dispute ve kargo kanıtı verilerini simüle eder.
-    """
-    return {
-        "dispute_id": dispute_id,
-        "order_id": "ORD-99281",
-        "customer_name": "Ahmet Yılmaz",
-        "customer_email": "ahmet@example.com",
-        "amount": "149.99 USD",
-        "reason": "Unrecognized charge / Fraudulent",
-        "tracking_number": "TR-987654321",
-        "carrier": "Yurtici Kargo",
-        "fulfillment_status": "Delivered",
-        "delivery_date": "2026-11-06 14:30"
-    }
-
-
-def submit_dispute_evidence(dispute_id: str, pdf_path: str, access_token: str):
-    """
-    Oluşturulan PDF savunma dosyasını Shopify Dispute API'ye otonom sunar.
-    """
-    print(f"[OTONOM API] '{pdf_path}' dosyası Shopify Dispute API'ye yükleniyor...")
-    time.sleep(1)
-    
-    print(f"[OTONOM API] Dispute {dispute_id} için kanıtlar bankaya başarıyla teslim edildi!")
-    return {
-        "submission_status": "submitted",
-        "dispute_id": dispute_id,
-        "submitted_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "evidence_file": pdf_path,
-        "message": "Savunma dosyası ve kargo kanıtları bankaya otonom olarak iletildi."
->>>>>>> e7ecfbb0f066597f629a938b94142e8d2ab9c74d
-    }
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            return response.json().get("order", {})
+    except Exception as e:
+        print(f"Error fetching order from Shopify: {e}")
+        
+    return {}

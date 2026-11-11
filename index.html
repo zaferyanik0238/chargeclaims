@@ -3,125 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChargeClaims - Automated Dispute & Chargeback Management for Shopify</title>
+    <title>ChargeClaims - Automated Chargeback Protection</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background-color: #0b0f19;
-            color: #f3f4f6;
-            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-    </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white">
 
-    <!-- Header Navigation -->
-    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-            <span class="text-2xl font-black tracking-tight text-white">Charge<span class="text-emerald-400">Claims</span></span>
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b border-slate-800">
+        <div class="text-xl font-bold tracking-wider text-emerald-400">
+            ChargeClaims
         </div>
-        <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-lg transition duration-200">
-            Get Started
-        </a>
+        <div>
+            <a href="https://calendly.com" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-medium text-sm transition">
+                Get Started
+            </a>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <main class="flex-grow flex flex-col items-center justify-center text-center px-4 pt-12 pb-20 max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-            Stop Losing Revenue to Fraudulent Chargebacks
-        </h1>
-        <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl">
-            Protect your Shopify store with automated, AI-driven dispute management. Win back your money with zero hassle and zero risk.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-4">
-            <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-4 rounded-lg text-lg transition duration-200 shadow-lg shadow-indigo-500/20">
-                Start Risk-Free Today
-            </a>
-            <!-- GÜNCELLENEN CALENDLY DEMO LINKI -->
-            <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="border border-gray-700 bg-gray-900 hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg transition duration-200">
-                Book a 10-Min Demo
-            </a>
-        </div>
-        
-        <p class="text-sm text-gray-500">
-            No credit card required • Instantly connects to Shopify
-        </p>
-
-        <!-- Pricing Section -->
-        <section id="pricing" class="mt-28 w-full">
-            <div class="text-center mb-12">
-                <span class="bg-blue-600/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase inline-block mb-4">
-                    Flexible Pricing Built for Growth
-                </span>
+    <main class="flex-grow flex flex-col items-center justify-center text-center px-4 py-16">
+        <div class="max-w-3xl mx-auto space-y-6">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
+                Stop Losing Revenue to Fraudulent Chargebacks
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto">
+                Protect your Shopify store with automated, AI-driven dispute management. Win back your money with zero hassle and zero risk.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition">
+                    Start Risk-Free Today
+                </a>
+                <a href="https://calendly.com" target="_blank" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition">
+                    Book a 10-Min Demo
+                </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                
-                <!-- Starter Tier -->
-                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-8 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">Starter (Risk-Free)</h3>
-                        <div class="mb-4">
-                            <span class="text-4xl font-extrabold text-white">$0</span>
-                            <span class="text-gray-400"> / month</span>
-                        </div>
-                        <p class="text-emerald-400 font-semibold text-sm mb-6">+15% Success Fee (Only when you win)</p>
-                        <ul class="space-y-3 text-sm text-gray-300">
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Automated Evidence Collection</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Standard Dispute Templates</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Basic Email Support</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Shopify App Integration</li>
-                        </ul>
-                    </div>
-                </div>
+            <p class="text-sm text-gray-500 pt-2">
+                No credit card required &bull; Instantly connects to Shopify
+            </p>
+        </div>
 
-                <!-- Growth Tier (Most Popular) -->
-                <div class="bg-gray-900/90 border-2 border-emerald-500 rounded-2xl p-8 flex flex-col justify-between relative shadow-2xl shadow-emerald-500/10">
-                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-500 text-gray-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider">
-                        MOST POPULAR
-                    </span>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">Growth</h3>
-                        <div class="mb-4">
-                            <span class="text-4xl font-extrabold text-white">$49</span>
-                            <span class="text-gray-400"> / month</span>
-                        </div>
-                        <p class="text-emerald-400 font-semibold text-sm mb-6">+5% Success Fee</p>
-                        <ul class="space-y-3 text-sm text-gray-300">
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> AI-Powered Custom Disputes</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Automated Bank Submission</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Priority Support</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Advanced Analytics Dashboard</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Enterprise Tier -->
-                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-8 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">Enterprise / Scale</h3>
-                        <div class="mb-4">
-                            <span class="text-4xl font-extrabold text-white">$149</span>
-                            <span class="text-gray-400"> / month</span>
-                        </div>
-                        <p class="text-emerald-400 font-semibold text-sm mb-6">0% Commission (Unlimited Disputes)</p>
-                        <ul class="space-y-3 text-sm text-gray-300">
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Unlimited Dispute Submissions</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Dedicated Account Manager</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> Custom API Integration</li>
-                            <li class="flex items-center"><span class="text-emerald-400 mr-2">✓</span> High-Volume Fraud Protection</li>
-                        </ul>
-                    </div>
-                </div>
-
+        <section id="pricing" class="mt-28 w-full max-w-4xl px-4">
+            <h2 class="text-2xl font-bold mb-6">Simple, Transparent Pricing</h2>
+            <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                <p class="text-slate-400">Ready to secure your revenue? Connect your store today.</p>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full border-t border-gray-800/60 py-6 text-center text-sm text-gray-500">
+    <footer class="w-full text-center py-6 border-t border-slate-800 text-sm text-slate-500">
         &copy; 2026 ChargeClaims. All rights reserved.
     </footer>
 

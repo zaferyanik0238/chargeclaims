@@ -1,110 +1,34 @@
-<<<<<<< HEAD
 import os
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+from weasyprint import HTML
 
-def generate_defense_pdf(dispute_data: dict) -> str:
-    # Klasör yoksa oluştur
-    output_dir = "output_pdfs"
-    os.makedirs(output_dir, exist_ok=True)
+def generate_dispute_pdf(claim_data: dict, output_path: str = "output_pdfs/dispute_defense.pdf") -> str:
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
-    dispute_id = dispute_data.get("dispute_id", "disp_unknown")
-    pdf_path = os.path.join(output_dir, f"defense_{dispute_id}.pdf")
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Chargeback Dispute Defense</title>
+        <style>
+            body {{ font-family: Helvetica, Arial, sans-serif; color: #333; margin: 40px; }}
+            h1 {{ color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }}
+            .section {{ margin-top: 20px; }}
+            .label {{ font-weight: bold; color: #475569; }}
+        </style>
+    </head>
+    <body>
+        <h1>Chargeback Dispute Defense Package</h1>
+        <div class="section">
+            <p><span class="label">Order ID:</span> {claim_data.get('order_id', 'N/A')}</p>
+            <p><span class="label">Customer Email:</span> {claim_data.get('email', 'N/A')}</p>
+            <p><span class="label">Dispute Amount:</span> ${claim_data.get('amount', '0.00')}</p>
+            <p><span class="label">Reason:</span> {claim_data.get('reason', 'Fraudulent / Unauthorized')}</p>
+            <p><span class="label">Timestamp:</span> {claim_data.get('timestamp', 'N/A')}</p>
+        </div>
+    </body>
+    </html>
+    """
     
-    # Güvenli veri çekme (.get kullanarak KeyError riskini tamamen sıfırlıyoruz)
-    order_id = dispute_data.get("order_id", "N/A")
-    amount = dispute_data.get("amount", "$0.00")
-    reason = dispute_data.get("reason", "Unknown")
-    customer_name = dispute_data.get("customer_name", dispute_data.get("customer", "Müşteri"))
-    carrier = dispute_data.get("carrier", "Kargo Firması")
-    fulfillment_status = dispute_data.get("fulfillment_status", "Delivered")
-    delivery_date = dispute_data.get("delivery_date", "N/A")
-
-    # PDF Oluşturma
-    c = canvas.Canvas(pdf_path, pagesize=letter)
-    width, height = letter
-    
-    # Başlık
-    c.setFont("Helvetica-Bold", 20)
-    c.drawString(50, height - 50, "ChargeClaims - Otonom Savunma Dosyası")
-    
-    c.setFont("Helvetica", 12)
-    c.drawString(50, height - 80, f"Dispute ID: {dispute_id}")
-    c.drawString(50, height - 100, f"Sipariş Numarası (Order ID): {order_id}")
-    c.drawString(50, height - 120, f"Tutar: {amount}")
-    c.drawString(50, height - 140, f"İtiraz Sebebi: {reason}")
-    
-    # Çizgi
-    c.setLineWidth(1)
-    c.line(50, height - 160, width - 50, height - 160)
-    
-    # Teslimat ve Kargo Kanıtları
-    c.setFont("Helvetica-Bold", 14)
-    c.drawString(50, height - 190, "Kargo ve Teslimat Kanıtları")
-    
-    c.setFont("Helvetica", 12)
-    c.drawString(50, height - 220, f"Müşteri Adı: {customer_name}")
-    c.drawString(50, height - 240, f"Kargo Firması: {carrier}")
-    c.drawString(50, height - 260, f"Teslimat Durumu: {fulfillment_status}")
-    c.drawString(50, height - 280, f"Teslimat Tarihi: {delivery_date}")
-    
-    c.setFont("Helvetica-Oblique", 10)
-    c.drawString(50, height - 330, "Bu belge ChargeClaims otonom sistemi tarafından bankaya sunulmak üzere üretilmiştir.")
-    
-    c.save()
-=======
-import os
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-
-def generate_defense_pdf(dispute_data: dict) -> str:
-    # Klasör yoksa oluştur
-    output_dir = "output_pdfs"
-    os.makedirs(output_dir, exist_ok=True)
-    
-    dispute_id = dispute_data.get("dispute_id", "disp_unknown")
-    pdf_path = os.path.join(output_dir, f"defense_{dispute_id}.pdf")
-    
-    # Güvenli veri çekme (.get kullanarak KeyError riskini tamamen sıfırlıyoruz)
-    order_id = dispute_data.get("order_id", "N/A")
-    amount = dispute_data.get("amount", "$0.00")
-    reason = dispute_data.get("reason", "Unknown")
-    customer_name = dispute_data.get("customer_name", dispute_data.get("customer", "Müşteri"))
-    carrier = dispute_data.get("carrier", "Kargo Firması")
-    fulfillment_status = dispute_data.get("fulfillment_status", "Delivered")
-    delivery_date = dispute_data.get("delivery_date", "N/A")
-
-    # PDF Oluşturma
-    c = canvas.Canvas(pdf_path, pagesize=letter)
-    width, height = letter
-    
-    # Başlık
-    c.setFont("Helvetica-Bold", 20)
-    c.drawString(50, height - 50, "ChargeClaims - Otonom Savunma Dosyası")
-    
-    c.setFont("Helvetica", 12)
-    c.drawString(50, height - 80, f"Dispute ID: {dispute_id}")
-    c.drawString(50, height - 100, f"Sipariş Numarası (Order ID): {order_id}")
-    c.drawString(50, height - 120, f"Tutar: {amount}")
-    c.drawString(50, height - 140, f"İtiraz Sebebi: {reason}")
-    
-    # Çizgi
-    c.setLineWidth(1)
-    c.line(50, height - 160, width - 50, height - 160)
-    
-    # Teslimat ve Kargo Kanıtları
-    c.setFont("Helvetica-Bold", 14)
-    c.drawString(50, height - 190, "Kargo ve Teslimat Kanıtları")
-    
-    c.setFont("Helvetica", 12)
-    c.drawString(50, height - 220, f"Müşteri Adı: {customer_name}")
-    c.drawString(50, height - 240, f"Kargo Firması: {carrier}")
-    c.drawString(50, height - 260, f"Teslimat Durumu: {fulfillment_status}")
-    c.drawString(50, height - 280, f"Teslimat Tarihi: {delivery_date}")
-    
-    c.setFont("Helvetica-Oblique", 10)
-    c.drawString(50, height - 330, "Bu belge ChargeClaims otonom sistemi tarafından bankaya sunulmak üzere üretilmiştir.")
-    
-    c.save()
->>>>>>> e7ecfbb0f066597f629a938b94142e8d2ab9c74d
-    return pdf_path
+    HTML(string=html_content).write_pdf(output_path)
+    return output_path

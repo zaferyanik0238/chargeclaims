@@ -1,6 +1,6 @@
 import os
 from fastapi import FastAPI, Request, Depends, HTTPException, status
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
@@ -32,7 +32,7 @@ app = FastAPI(title="ChargeClaims Landing & API")
 templates = Jinja2Templates(directory=".")
 security = HTTPBasic()
 
-# Admin Kullanıcı Bilgileri (İstediğin gibi değiştirebilirsin)
+# Admin Kimlik Bilgileri
 ADMIN_USER = "admin"
 ADMIN_PASS = "chargeclaims2026"
 
@@ -83,12 +83,11 @@ async def request_demo(demo: DemoRequestCreate, db: Session = Depends(get_db)):
         content={"status": "success", "message": "Demo talebiniz başarıyla kaydedildi!"}
     )
 
-# Şifreli Admin Paneli (Talepleri Listeleme)
+# Şifreli Admin Paneli
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_panel(request: Request, db: Session = Depends(get_db), username: str = Depends(verify_admin)):
     requests_list = db.query(DemoRequestModel).order_by(DemoRequestModel.created_at.desc()).all()
     
-    # Basit ve şık bir admin arayüzü HTML çıktısı
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">

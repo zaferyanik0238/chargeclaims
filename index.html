@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChargeClaims - Automated Chargeback Protection</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none !important; }
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
+            display: flex; align-items: center; justify-content: center; z-index: 50; padding: 1rem;
+        }
+        .modal-box {
+            background: #0f172a; border: 1px solid #1e293b; border-radius: 1rem;
+            padding: 2rem; max-width: 28rem; width: 100%; color: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white relative">
 
@@ -42,21 +54,79 @@
             </p>
         </div>
 
-        <section id="pricing" class="mt-28 w-full max-w-4xl px-4">
-            <h2 class="text-2xl font-bold mb-6">Simple, Transparent Pricing</h2>
-            <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-                <p class="text-slate-400">Ready to secure your revenue? Connect your store today.</p>
+        <!-- Fiyatlandırma Bölümü (Pricing Section) -->
+        <section id="pricing" class="mt-32 w-full max-w-6xl px-4 text-left">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">Ready to secure your revenue? Choose the plan that fits your store or connect today.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between hover:border-slate-700 transition">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Starter</h3>
+                        <p class="text-slate-400 text-sm mb-6">For emerging Shopify stores getting started with chargeback protection.</p>
+                        <div class="text-4xl font-extrabold text-white mb-6">$49<span class="text-lg font-normal text-slate-400">/mo</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Up to 10 Disputes /mo</li>
+                            <li class="flex items-center gap-2">&#10003; Automated Evidence Packets</li>
+                            <li class="flex items-center gap-2">&#10003; Standard Email Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModal()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl font-semibold transition text-center cursor-pointer">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Growth Plan (Highlighted / Most Popular) -->
+                <div class="bg-slate-900 border-2 border-indigo-600 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-indigo-950/50">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                        Most Popular
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Growth</h3>
+                        <p class="text-slate-400 text-sm mb-6">For scaling stores looking to maximize win rates and recover revenue.</p>
+                        <div class="text-4xl font-extrabold text-white mb-6">$149<span class="text-lg font-normal text-slate-400">/mo</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Unlimited Disputes</li>
+                            <li class="flex items-center gap-2">&#10003; AI-Powered Evidence Generation</li>
+                            <li class="flex items-center gap-2">&#10003; Shopify Instant Sync</li>
+                            <li class="flex items-center gap-2">&#10003; Priority Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl font-semibold transition text-center cursor-pointer">
+                        Start Risk-Free
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between hover:border-slate-700 transition">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Enterprise</h3>
+                        <p class="text-slate-400 text-sm mb-6">For high-volume merchants requiring custom solutions and API access.</p>
+                        <div class="text-4xl font-extrabold text-white mb-6">Custom</div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Multi-Store Support</li>
+                            <li class="flex items-center gap-2">&#10003; Dedicated Account Manager</li>
+                            <li class="flex items-center gap-2">&#10003; Custom API Integrations</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModal()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl font-semibold transition text-center cursor-pointer">
+                        Contact Sales
+                    </button>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="w-full text-center py-6 border-t border-slate-800 text-sm text-slate-500">
+    <footer class="w-full text-center py-6 border-t border-slate-800 text-sm text-slate-500 mt-20">
         &copy; 2026 ChargeClaims. All rights reserved.
     </footer>
 
     <!-- Demo Talep Formu (Modal Pencere) -->
-    <div id="demoModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden px-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full relative text-left shadow-2xl">
+    <div id="demoModal" class="modal-overlay hidden">
+        <div class="modal-box relative text-left">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-white">Book Your 10-Min Demo</h3>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>

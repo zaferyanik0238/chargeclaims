@@ -6,16 +6,16 @@
     <title>ChargeClaims - Automated Chargeback Protection</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white">
+<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white relative">
 
     <header class="w-full px-6 py-4 flex justify-between items-center border-b border-slate-800">
         <div class="text-xl font-bold tracking-wider text-emerald-400">
             ChargeClaims
         </div>
         <div>
-            <a href="https://calendly.com" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-medium text-sm transition">
+            <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-medium text-sm transition cursor-pointer">
                 Get Started
-            </a>
+            </button>
         </div>
     </header>
 
@@ -32,9 +32,9 @@
                 <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition">
                     Start Risk-Free Today
                 </a>
-                <a href="https://calendly.com" target="_blank" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition">
+                <button onclick="openModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
                     Book a 10-Min Demo
-                </a>
+                </button>
             </div>
 
             <p class="text-sm text-gray-500 pt-2">
@@ -54,5 +54,83 @@
         &copy; 2026 ChargeClaims. All rights reserved.
     </footer>
 
+    <!-- Demo Talep Formu (Modal Pencere) -->
+    <div id="demoModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full relative text-left shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">Book Your 10-Min Demo</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
+            </div>
+            
+            <form id="demoForm" onsubmit="submitDemo(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
+                    <input type="text" id="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Work Email</label>
+                    <input type="email" id="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" placeholder="john@store.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Shopify Store URL</label>
+                    <input type="text" id="store_url" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" placeholder="mystore.myshopify.com">
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl font-semibold transition mt-2 text-white cursor-pointer">
+                    Submit Request
+                </button>
+            </form>
+            
+            <!-- Başarılı Gönderim Mesajı -->
+            <div id="successMessage" class="hidden text-center py-6 space-y-3">
+                <div class="text-emerald-400 text-4xl">&#10003;</div>
+                <h4 class="text-lg font-bold text-white">Request Received!</h4>
+                <p class="text-sm text-slate-400">Thank you! We will contact you shortly to schedule your demo.</p>
+                <button onclick="closeModal()" class="mt-4 bg-slate-800 hover:bg-slate-700 px-6 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ve API İstek Yönetimi için JavaScript -->
+    <script>
+        function openModal() {
+            document.getElementById('demoModal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('demoModal').classList.add('hidden');
+            document.getElementById('demoForm').reset();
+            document.getElementById('demoForm').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+        async function submitDemo(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const store_url = document.getElementById('store_url').value;
+            const btn = document.getElementById('submitBtn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch('/api/request-demo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, store_url })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('demoForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
+            } catch (err) {
+                alert('Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Submit Request';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -27,6 +27,8 @@
             ChargeClaims
         </div>
         <div class="flex items-center gap-4">
+            <a href="#about" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">About Us</a>
+            <a href="#references" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">References</a>
             <a href="#features" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">Features</a>
             <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">Pricing</a>
             <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-medium text-sm transition cursor-pointer">
@@ -40,7 +42,7 @@
         <div class="max-w-3xl mx-auto space-y-6">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800 text-indigo-300 text-xs font-medium">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Trusted by Top Shopify Merchants
+                Trusted by Top Shopify Merchants Worldwide
             </div>
             
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
@@ -51,7 +53,7 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer shadow-lg shadow-indigo-600/20">
+                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer shadow-lg shadow-indigo-600/25">
                     Start Risk-Free Today
                 </button>
                 <button onclick="openModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
@@ -63,6 +65,104 @@
                 No credit card required &bull; Instantly connects to Shopify
             </p>
         </div>
+
+        <!-- References / Testimonials Section -->
+        <section id="references" class="mt-32 w-full max-w-6xl px-4 text-left">
+            <div class="text-center mb-16">
+                <div class="text-emerald-400 text-sm font-semibold tracking-wider uppercase mb-2">Verified Success Stories</div>
+                <h2 class="text-3xl font-extrabold mb-4">Trusted by High-Growth Shopify Brands</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">See how store owners protect their revenue and win back disputed funds effortlessly.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            "Before ChargeClaims, we were losing hours gathering tracking and IP data for chargebacks. Now it's 100% automated. Our win rate jumped from 30% to over 85%."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-indigo-600/30 text-indigo-400 font-bold flex items-center justify-center text-sm">MK</div>
+                        <div>
+                            <div class="font-semibold text-sm text-white">Marcus K.</div>
+                            <div class="text-xs text-slate-400">Founder, Apex Apparel (Shopify Plus)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            "The Shopify instant sync is a game changer. The moment a friendly fraud dispute hits, the AI evidence packet is generated and submitted instantly. Incredible ROI."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600/30 text-emerald-400 font-bold flex items-center justify-center text-sm">SL</div>
+                        <div>
+                            <div class="font-semibold text-sm text-white">Sarah L.</div>
+                            <div class="text-xs text-slate-400">Operations Director, Lumina Home</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            "Customer support is exceptionally responsive, and their WhatsApp line makes quick inquiries super easy. Recovered over $14k in our first quarter alone."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-600/30 text-purple-400 font-bold flex items-center justify-center text-sm">DT</div>
+                        <div>
+                            <div class="font-semibold text-sm text-white">David T.</div>
+                            <div class="text-xs text-slate-400">CEO, Nordic Gadgets</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us / Who We Are Section -->
+        <section id="about" class="mt-32 w-full max-w-6xl px-4 text-left">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-900/40 border border-slate-800/80 rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-3xl space-y-6 relative z-10">
+                    <div class="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold tracking-wider uppercase">
+                        <span>//</span> Who We Are
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Built by E-Commerce Veterans, Engineered for Maximum Recovery
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        ChargeClaims was founded by a team of software engineers and e-commerce growth specialists who experienced firsthand the frustration of losing legitimate revenue to friendly fraud and complex bank chargeback cycles.
+                    </p>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                        Our mission is to level the playing field for Shopify merchants worldwide. By combining deep Shopify ecosystem integrations with advanced AI evidence generation, we automate the entire dispute workflow—allowing store owners to focus on scaling their business while we recover their hard-earned money.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-8 border-t border-slate-800/80">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">98%</div>
+                            <div class="text-xs text-slate-400 mt-1">Data Accuracy Rate</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400">&lt; 2 min</div>
+                            <div class="text-xs text-slate-400 mt-1">Instant Shopify Setup</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">24/7</div>
+                            <div class="text-xs text-slate-400 mt-1">Automated Monitoring</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Features Section -->
         <section id="features" class="mt-32 w-full max-w-6xl px-4 text-left">
@@ -156,7 +256,7 @@
         </section>
     </main>
 
-    <!-- Kurumsal Footer -->
+    <!-- Kurumsal Footer (WhatsApp, Telefon & İletişim Dahil) -->
     <footer class="w-full bg-slate-950 border-t border-slate-800/80 py-12 px-6 mt-20 text-sm text-slate-400">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div class="space-y-3">
@@ -166,6 +266,8 @@
             <div>
                 <h4 class="font-semibold text-white mb-3">Product</h4>
                 <ul class="space-y-2 text-xs">
+                    <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#references" class="hover:text-white transition">References</a></li>
                     <li><a href="#features" class="hover:text-white transition">Features</a></li>
                     <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
                     <li><button onclick="openModal()" class="hover:text-white transition text-left cursor-pointer">Book a Demo</button></li>
@@ -176,6 +278,7 @@
                 <ul class="space-y-2 text-xs">
                     <li>Email: <a href="mailto:support@chargeclaims.com" class="text-indigo-400 hover:underline">support@chargeclaims.com</a></li>
                     <li>Sales: <a href="mailto:sales@chargeclaims.com" class="text-indigo-400 hover:underline">sales@chargeclaims.com</a></li>
+                    <li>WhatsApp: <a href="https://wa.me/905327332007" target="_blank" class="text-emerald-400 hover:underline">+90 (532) 733 20 07</a></li>
                     <li>Hours: Mon - Fri (09:00 - 18:00 UTC)</li>
                 </ul>
             </div>

@@ -29,9 +29,9 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition">
+                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
                     Start Risk-Free Today
-                </a>
+                </button>
                 <button onclick="openModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
                     Book a 10-Min Demo
                 </button>
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <!-- Modal ve API İstek Yönetimi için JavaScript -->
+    <!-- JavaScript -->
     <script>
         function openModal() {
             document.getElementById('demoModal').classList.remove('hidden');

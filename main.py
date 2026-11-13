@@ -62,12 +62,10 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    # Güncel FastAPI/Starlette TemplateResponse imzası (request ilk parametredir)
     return templates.TemplateResponse(request, "index.html", {})
 
 @app.post("/api/request-demo")
 async def request_demo(demo: DemoRequestCreate, db: Session = Depends(get_db)):
-    # Veritabanına Kayıt
     new_request = DemoRequestModel(
         name=demo.name,
         email=demo.email,
@@ -84,7 +82,7 @@ async def request_demo(demo: DemoRequestCreate, db: Session = Depends(get_db)):
         content={"status": "success", "message": "Demo talebiniz başarıyla kaydedildi!"}
     )
 
-# Şifreli Admin Paneli
+# Şifreli Admin Paneli (Tıklanabilir Linkler ile Güncellendi)
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_panel(request: Request, db: Session = Depends(get_db), username: str = Depends(verify_admin)):
     requests_list = db.query(DemoRequestModel).order_by(DemoRequestModel.created_at.desc()).all()
@@ -98,10 +96,13 @@ async def admin_panel(request: Request, db: Session = Depends(get_db), username:
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-slate-950 text-white min-h-screen p-8">
-        <div class="max-w-5xl mx-auto">
+        <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
                 <h1 class="text-2xl font-bold text-emerald-400">ChargeClaims Admin - Demo Talepleri</h1>
-                <span class="text-sm text-slate-400">Hoş geldin, {username}</span>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-slate-400">Hoş geldin, {username}</span>
+                    <a href="/" target="_blank" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs transition">Siteye Git &rarr;</a>
+                </div>
             </div>
             
             <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
@@ -111,7 +112,7 @@ async def admin_panel(request: Request, db: Session = Depends(get_db), username:
                             <th class="p-4">ID</th>
                             <th class="p-4">Ad Soyad</th>
                             <th class="p-4">E-posta</th>
-                            <th class="p-4">Mağaza URL</th>
+                            <th class="p-4">Mağaza URL / Bağlantı</th>
                             <th class="p-4">Tarih</th>
                         </tr>
                     </thead>
@@ -124,12 +125,19 @@ async def admin_panel(request: Request, db: Session = Depends(get_db), username:
         """
     else:
         for req in requests_list:
+            # URL kontrolü: http ile başlamıyorsa ekleyelim ki link düzgün çalışsın
+            url_link = req.store_url if req.store_url.startswith("http") else f"https://{req.store_url}"
+            
             html_content += f"""
                 <tr class="hover:bg-slate-800/50 transition">
                     <td class="p-4 font-mono text-slate-400">#{req.id}</td>
                     <td class="p-4 font-semibold">{req.name}</td>
-                    <td class="p-4 text-indigo-400">{req.email}</td>
-                    <td class="p-4 text-slate-300">{req.store_url}</td>
+                    <td class="p-4 text-indigo-400"><a href="mailto:{req.email}" class="hover:underline">{req.email}</a></td>
+                    <td class="p-4 max-w-xs truncate">
+                        <a href="{url_link}" target="_blank" class="text-emerald-400 hover:underline flex items-center gap-1 font-mono text-xs">
+                            {req.store_url} ↗
+                        </a>
+                    </td>
                     <td class="p-4 text-slate-500 text-xs">{req.created_at.strftime('%Y-%m-%d %H:%M')}</td>
                 </tr>
             """

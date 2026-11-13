@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChargeClaims - Automated Chargeback Protection</title>
+    <title>ChargeClaims - Automated Chargeback Protection for Shopify</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -20,19 +20,28 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white relative">
 
+    <!-- Header -->
     <header class="w-full px-6 py-4 flex justify-between items-center border-b border-slate-800">
-        <div class="text-xl font-bold tracking-wider text-emerald-400">
+        <div class="text-xl font-bold tracking-wider text-emerald-400 flex items-center gap-2">
             ChargeClaims
         </div>
-        <div>
+        <div class="flex items-center gap-4">
+            <a href="#features" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">Features</a>
+            <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition hidden sm:inline">Pricing</a>
             <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-medium text-sm transition cursor-pointer">
                 Get Started
             </button>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <main class="flex-grow flex flex-col items-center justify-center text-center px-4 py-16">
         <div class="max-w-3xl mx-auto space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800 text-indigo-300 text-xs font-medium">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Trusted by Top Shopify Merchants
+            </div>
+            
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
                 Stop Losing Revenue to Fraudulent Chargebacks
             </h1>
@@ -41,7 +50,7 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
+                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer shadow-lg shadow-indigo-600/20">
                     Start Risk-Free Today
                 </button>
                 <button onclick="openModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-6 py-3 rounded-xl font-semibold transition cursor-pointer">
@@ -49,12 +58,38 @@
                 </button>
             </div>
 
-            <p class="text-sm text-gray-500 pt-2">
+            <p class="text-sm text-slate-500 pt-2">
                 No credit card required &bull; Instantly connects to Shopify
             </p>
         </div>
 
-        <!-- Fiyatlandırma Bölümü (Pricing Section) -->
+        <!-- Features / Hakkımızda & Değer Önerisi -->
+        <section id="features" class="mt-32 w-full max-w-6xl px-4 text-left">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold mb-4">Why Leading Merchants Choose ChargeClaims</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">Built by e-commerce experts to automate dispute workflows and recover maximum revenue.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl">
+                    <div class="text-emerald-400 text-2xl mb-4">⚡</div>
+                    <h3 class="text-lg font-bold mb-2">Instant Shopify Sync</h3>
+                    <p class="text-slate-400 text-sm">Automatically pulls tracking numbers, customer IP, and fulfillment proof the second a dispute is filed.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl">
+                    <div class="text-indigo-400 text-2xl mb-4">🤖</div>
+                    <h3 class="text-lg font-bold mb-2">AI Evidence Packets</h3>
+                    <p class="text-slate-400 text-sm">Generates legally sound, processor-compliant evidence documents designed to maximize win rates.</p>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-2xl">
+                    <div class="text-emerald-400 text-2xl mb-4">🛡️</div>
+                    <h3 class="text-lg font-bold mb-2">Zero-Risk Setup</h3>
+                    <p class="text-slate-400 text-sm">Connect in under 2 minutes. No upfront risk, pay only when you successfully recover your revenue.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
         <section id="pricing" class="mt-32 w-full max-w-6xl px-4 text-left">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-extrabold mb-4">Simple, Transparent Pricing</h2>
@@ -79,7 +114,7 @@
                     </button>
                 </div>
 
-                <!-- Growth Plan (Highlighted / Most Popular) -->
+                <!-- Growth Plan -->
                 <div class="bg-slate-900 border-2 border-indigo-600 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-indigo-950/50">
                     <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                         Most Popular
@@ -120,8 +155,43 @@
         </section>
     </main>
 
-    <footer class="w-full text-center py-6 border-t border-slate-800 text-sm text-slate-500 mt-20">
-        &copy; 2026 ChargeClaims. All rights reserved.
+    <!-- Kurumsal Footer & İletişim Bilgileri -->
+    <footer class="w-full bg-slate-950 border-t border-slate-800/80 py-12 px-6 mt-20 text-sm text-slate-400">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <div class="text-lg font-bold text-emerald-400">ChargeClaims</div>
+                <p class="text-xs text-slate-500">Automated chargeback protection & dispute management platform for high-growth Shopify merchants.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Product</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                    <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+                    <li><button onclick="openModal()" class="hover:text-white transition text-left">Book a Demo</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Contact & Support</h4>
+                <ul class="space-y-2 text-xs">
+                    <li>Email: <a href="mailto:support@chargeclaims.com" class="text-indigo-400 hover:underline">support@chargeclaims.com</a></li>
+                    <li>Sales: <a href="mailto:sales@chargeclaims.com" class="text-indigo-400 hover:underline">sales@chargeclaims.com</a></li>
+                    <li>Hours: Mon - Fri (09:00 - 18:00 UTC)</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Legal</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto pt-6 border-t border-slate-900 text-center text-xs text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>&copy; 2026 ChargeClaims. All rights reserved.</div>
+            <div class="flex gap-4">
+                <a href="/admin" class="hover:text-slate-400">Admin Portal</a>
+            </div>
+        </div>
     </footer>
 
     <!-- Demo Talep Formu (Modal Pencere) -->
@@ -188,6 +258,7 @@
                     body: JSON.stringify({ name, email, store_url })
                 });
                 
+                , 
                 if (response.ok) {
                     document.getElementById('demoForm').classList.add('hidden');
                     document.getElementById('successMessage').classList.remove('hidden');

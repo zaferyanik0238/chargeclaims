@@ -62,7 +62,8 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    # Güncel FastAPI/Starlette TemplateResponse imzası (request ilk parametredir)
+    return templates.TemplateResponse(request, "index.html", {})
 
 @app.post("/api/request-demo")
 async def request_demo(demo: DemoRequestCreate, db: Session = Depends(get_db)):

@@ -3,79 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChargeClaims - Automated Chargeback Protection for Shopify</title>
+    <title>ChargeClaims - Automated Chargeback Protection & Fraud Shield</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden { display: none !important; }
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
-            display: flex; align-items: center; justify-content: center; z-index: 50; padding: 1rem;
-            backdrop-filter: blur(4px);
+        /* Modal Stilleri - Tailwind'den bağımsız kesin çalışır */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
         }
-        .modal-box {
-            background: #0f172a; border: 1px solid #1e293b; border-radius: 1rem;
-            padding: 2rem; max-width: 32rem; width: 100%; color: white; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            max-height: 85vh; overflow-y: auto;
+        .custom-modal-box {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 32rem;
+            width: 100%;
+            color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white font-sans antialiased selection:bg-indigo-600 selection:text-white">
 
-    <!-- Header -->
-    <header class="w-full px-6 py-5 flex justify-between items-center border-b border-slate-900 sticky top-0 bg-slate-950/80 backdrop-blur-md z-40">
-        <div class="text-xl font-extrabold tracking-wider text-emerald-400 flex items-center gap-2">
-            ChargeClaims
+    <!-- Üst Kampanya Duyuru Bandı (Campaign Banner) -->
+    <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-600 text-white text-xs sm:text-sm py-2.5 px-4 text-center font-medium relative z-50">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2">
+            <span class="bg-black/30 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider text-emerald-300">Launch Offer</span>
+            <span>Get <strong>Cross-Merchant IP & Device Fraud Shield</strong> FREE with any plan!</span>
+            <button type="button" onclick="openModal()" class="underline font-bold hover:text-emerald-200 transition cursor-pointer ml-1">
+                Claim Offer &rarr;
+            </button>
         </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b border-slate-900 sticky top-0 bg-slate-950/90 backdrop-blur-md z-40">
+        <a href="#" class="text-xl font-extrabold tracking-wider text-emerald-400 flex items-center gap-2">
+            ChargeClaims
+        </a>
         <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
-            <a href="#about" class="hover:text-white transition">About Us</a>
-            <a href="#references" class="hover:text-white transition">References</a>
             <a href="#features" class="hover:text-white transition">Features</a>
+            <a href="#fraud-shield" class="hover:text-emerald-400 text-emerald-400/90 font-medium transition">Fraud Shield (Free)</a>
+            <a href="#references" class="hover:text-white transition">References</a>
+            <a href="#about" class="hover:text-white transition">About Us</a>
             <a href="#pricing" class="hover:text-white transition">Pricing</a>
         </nav>
-        <div class="flex items-center gap-4">
-            <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl font-medium text-sm transition cursor-pointer shadow-lg shadow-indigo-600/20">
+        <div class="flex items-center gap-3">
+            <button type="button" onclick="openModal()" class="hidden sm:inline-block text-sm text-slate-300 hover:text-white px-3 py-2 transition cursor-pointer">
+                Book Demo
+            </button>
+            <button type="button" onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-500 px-5 py-2.5 rounded-xl font-semibold text-sm transition cursor-pointer shadow-lg shadow-indigo-600/25">
                 Get Started
             </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Content -->
     <main class="flex-grow">
-        <section class="max-w-5xl mx-auto px-4 pt-20 pb-16 text-center space-y-8">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-800/60 text-indigo-300 text-xs font-semibold tracking-wide">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto px-4 pt-16 pb-20 text-center space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-950/70 border border-indigo-700/60 text-indigo-300 text-xs font-semibold tracking-wide">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Trusted by Top Shopify Merchants Worldwide
+                Trusted by High-Growth Shopify Merchants
             </div>
             
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-                Stop Losing Revenue to <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-indigo-400">Fraudulent Chargebacks</span>
+                Stop Losing Revenue to <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-indigo-400">Chargebacks & Repeat Fraudsters</span>
             </h1>
             
             <p class="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                Protect your Shopify store with automated, AI-driven dispute management. Win back your money with zero hassle and zero risk.
+                Automate Shopify dispute recovery with AI evidence packets—and block serial fraudsters before they checkout using our <strong class="text-slate-200">Free Shared Fraud Intelligence Network</strong>.
             </p>
             
+            <!-- Kampanya ve Aksiyon Butonları -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-                <button onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-500 px-8 py-3.5 rounded-xl font-semibold transition cursor-pointer shadow-xl shadow-indigo-600/30 text-base">
-                    Start Risk-Free Today
+                <button type="button" onclick="openModal()" class="bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-xl font-bold transition cursor-pointer shadow-xl shadow-indigo-600/30 text-base">
+                    Start 14-Day Free Trial
                 </button>
-                <button onclick="openModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 px-8 py-3.5 rounded-xl font-semibold transition cursor-pointer text-base text-slate-300">
+                <button type="button" onclick="openModal()" class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/50 text-emerald-300 px-8 py-4 rounded-xl font-bold transition cursor-pointer text-base">
+                    Free Chargeback Audit
+                </button>
+                <button type="button" onclick="openModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 px-8 py-4 rounded-xl font-semibold transition cursor-pointer text-base text-slate-300">
                     Book a 10-Min Demo
                 </button>
             </div>
 
             <p class="text-xs text-slate-500 pt-2">
-                No credit card required &bull; Instantly connects to Shopify &bull; 2-minute setup
+                No credit card required &bull; 2-minute Shopify sync &bull; Free Fraud Shield included
             </p>
+        </section>
+
+        <!-- Proactive Fraud Shield Section (Yeni Ortak Ağ Özelliği) -->
+        <section id="fraud-shield" class="max-w-6xl mx-auto px-4 py-16 border-t border-slate-900">
+            <div class="bg-gradient-to-r from-indigo-950/50 via-slate-900 to-emerald-950/30 border border-indigo-500/30 rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 max-w-2xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                        Included Free With Every Plan
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+                        Cross-Merchant IP & Device Fraud Shield
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Serial fraudsters and Cash-on-Delivery (COD) scammers hit multiple stores simultaneously. When a bad actor strikes one store in our network, ChargeClaims automatically flags their IP, device fingerprint, and velocity patterns across all connected Shopify stores—stopping losses before shipping.
+                    </p>
+                </div>
+                <div class="shrink-0">
+                    <button type="button" onclick="openModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-6 py-4 rounded-xl text-sm transition cursor-pointer shadow-lg shadow-emerald-500/20">
+                        Activate Free Protection
+                    </button>
+                </div>
+            </div>
         </section>
 
         <!-- Features Grid -->
         <section id="features" class="max-w-6xl mx-auto px-4 py-20 border-t border-slate-900">
             <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                <h2 class="text-3xl font-bold tracking-tight">Why Leading Merchants Choose Us</h2>
-                <p class="text-slate-400 text-sm">Built by e-commerce experts to automate dispute workflows and maximize recovery.</p>
+                <h2 class="text-3xl font-bold tracking-tight">Complete Protection Before & After Checkout</h2>
+                <p class="text-slate-400 text-sm">Built by e-commerce veterans to automate dispute workflows and stop fraudulent orders.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -87,12 +145,12 @@
                 <div class="bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl hover:border-slate-700 transition">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg font-bold mb-6">🤖</div>
                     <h3 class="text-lg font-semibold mb-2 text-white">AI Evidence Packets</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Generates legally sound, processor-compliant evidence documents designed to maximize win rates.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Generates legally sound, processor-compliant evidence documents designed to maximize bank win rates.</p>
                 </div>
                 <div class="bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl hover:border-slate-700 transition">
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg font-bold mb-6">🛡️</div>
-                    <h3 class="text-lg font-semibold mb-2 text-white">Zero-Risk Setup</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Connect in under 2 minutes. No upfront risk, pay only when you successfully recover your revenue.</p>
+                    <h3 class="text-lg font-semibold mb-2 text-white">Real-Time Velocity Alerts</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Detects simultaneous multi-store checkout attempts and blocks repeat COD or card scammers immediately.</p>
                 </div>
             </div>
         </section>
@@ -182,7 +240,7 @@
         <section id="pricing" class="max-w-6xl mx-auto px-4 py-20 border-t border-slate-900">
             <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
                 <h2 class="text-3xl font-bold tracking-tight">Simple, Transparent Pricing</h2>
-                <p class="text-slate-400 text-sm">Choose the plan that fits your store or connect today.</p>
+                <p class="text-slate-400 text-sm">Every plan includes our Cross-Merchant Fraud Shield at $0 extra cost.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
@@ -190,4 +248,245 @@
                 <div class="bg-slate-900/40 border border-slate-800/60 rounded-2xl p-8 flex flex-col justify-between">
                     <div>
                         <h3 class="text-lg font-bold text-white mb-2">Starter</h3>
-                        <p class="text-slate-400
+                        <p class="text-slate-400 text-xs mb-6">For emerging Shopify stores getting started with protection.</p>
+                        <div class="text-3xl font-extrabold text-white mb-6">$49<span class="text-sm font-normal text-slate-400">/mo</span></div>
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Up to 10 Disputes /mo</li>
+                            <li class="flex items-center gap-2">&#10003; Automated Evidence Packets</li>
+                            <li class="flex items-center gap-2 text-emerald-400 font-medium">&#10003; Free IP & Device Fraud Shield</li>
+                            <li class="flex items-center gap-2">&#10003; Standard Email & WhatsApp Support</li>
+                        </ul>
+                    </div>
+                    <button type="button" onclick="openModal()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl font-semibold text-xs transition cursor-pointer">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Growth -->
+                <div class="bg-slate-900 border-2 border-indigo-600 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-indigo-950/40">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                        Most Popular &bull; 20% Off Annual
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">Growth</h3>
+                        <p class="text-slate-400 text-xs mb-6">For scaling stores looking to maximize win rates.</p>
+                        <div class="text-3xl font-extrabold text-white mb-6">$149<span class="text-sm font-normal text-slate-400">/mo</span></div>
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Unlimited Disputes</li>
+                            <li class="flex items-center gap-2">&#10003; AI-Powered Evidence Generation</li>
+                            <li class="flex items-center gap-2 text-emerald-400 font-medium">&#10003; Free IP & Device Fraud Shield</li>
+                            <li class="flex items-center gap-2">&#10003; Priority 1-on-1 Support</li>
+                        </ul>
+                    </div>
+                    <button type="button" onclick="openModal()" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-semibold text-xs transition cursor-pointer">
+                        Claim Risk-Free Offer
+                    </button>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-slate-900/40 border border-slate-800/60 rounded-2xl p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">Enterprise</h3>
+                        <p class="text-slate-400 text-xs mb-6">For high-volume merchants requiring custom solutions.</p>
+                        <div class="text-3xl font-extrabold text-white mb-6">Custom</div>
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">&#10003; Multi-Store Support</li>
+                            <li class="flex items-center gap-2">&#10003; Dedicated Account Manager</li>
+                            <li class="flex items-center gap-2 text-emerald-400 font-medium">&#10003; Custom Fraud Rules & API</li>
+                        </ul>
+                    </div>
+                    <button type="button" onclick="openModal()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl font-semibold text-xs transition cursor-pointer">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-slate-950 border-t border-slate-900 py-12 px-6 text-xs text-slate-400">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <div class="text-base font-bold text-emerald-400">ChargeClaims</div>
+                <p class="text-slate-500">Automated chargeback protection & dispute management platform for high-growth Shopify merchants.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3 text-xs uppercase tracking-wider">Product</h4>
+                <ul class="space-y-2">
+                    <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                    <li><a href="#fraud-shield" class="hover:text-emerald-400 transition">Fraud Shield</a></li>
+                    <li><a href="#references" class="hover:text-white transition">References</a></li>
+                    <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3 text-xs uppercase tracking-wider">Contact & Support</h4>
+                <ul class="space-y-2">
+                    <li>Email: <a href="mailto:support@chargeclaims.com" class="text-indigo-400 hover:underline">support@chargeclaims.com</a></li>
+                    <li>Sales: <a href="mailto:sales@chargeclaims.com" class="text-indigo-400 hover:underline">sales@chargeclaims.com</a></li>
+                    <li>WhatsApp: <a href="https://wa.me/905327332007" target="_blank" class="text-emerald-400 hover:underline">+90 (532) 733 20 07</a></li>
+                    <li>Hours: Mon - Fri (09:00 - 18:00 UTC)</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3 text-xs uppercase tracking-wider">Legal</h4>
+                <ul class="space-y-2">
+                    <li><button type="button" onclick="openPrivacyModal()" class="hover:text-white transition text-left cursor-pointer">Privacy Policy</button></li>
+                    <li><button type="button" onclick="openTermsModal()" class="hover:text-white transition text-left cursor-pointer">Terms of Service</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto pt-6 border-t border-slate-900/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500">
+            <div>&copy; 2026 ChargeClaims. All rights reserved.</div>
+            <div><a href="/admin" class="hover:text-slate-300 transition">Admin Portal</a></div>
+        </div>
+    </footer>
+
+    <!-- Demo / Campaign Modal -->
+    <div id="demoModal" class="custom-modal-overlay" onclick="if(event.target === this) closeModal()">
+        <div class="custom-modal-box text-left">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold text-white">Start Free Trial & Fraud Shield</h3>
+                <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer leading-none">&times;</button>
+            </div>
+            
+            <form id="demoForm" onsubmit="submitDemo(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+                    <input type="text" id="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500" placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Work Email</label>
+                    <input type="email" id="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500" placeholder="john@store.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Shopify Store URL</label>
+                    <input type="text" id="store_url" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500" placeholder="mystore.myshopify.com">
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-semibold text-sm transition mt-2 text-white cursor-pointer shadow-lg shadow-indigo-600/20">
+                    Activate Free Access
+                </button>
+            </form>
+            
+            <div id="successMessage" style="display: none;" class="text-center py-6 space-y-3">
+                <div class="text-emerald-400 text-3xl">&#10003;</div>
+                <h4 class="text-base font-bold text-white">Request Received!</h4>
+                <p class="text-xs text-slate-400">Thank you! We will contact you shortly via email or WhatsApp to activate your account.</p>
+                <button type="button" onclick="closeModal()" class="mt-4 bg-slate-800 hover:bg-slate-700 px-5 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="custom-modal-overlay" onclick="if(event.target === this) closePrivacyModal()">
+        <div class="custom-modal-box text-left space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-bold text-white">Privacy Policy</h3>
+                <button type="button" onclick="closePrivacyModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer leading-none">&times;</button>
+            </div>
+            <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                <p>At ChargeClaims, we take your privacy seriously. This policy outlines how we handle your data when you use our Shopify chargeback protection platform.</p>
+                <p><strong>1. Data Collection:</strong> We collect store credentials and hashed transaction metadata solely for automating dispute evidence generation and cross-merchant fraud detection.</p>
+                <p><strong>2. Data Security:</strong> All data is encrypted in transit and at rest using SHA-256 hashing and industry-standard TLS protocols.</p>
+                <p><strong>3. Third-Party Sharing:</strong> We never sell or share your merchant data with third parties except as required to process your store's claims.</p>
+            </div>
+            <div class="pt-4 border-t border-slate-800 text-right">
+                <button type="button" onclick="closePrivacyModal()" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="custom-modal-overlay" onclick="if(event.target === this) closeTermsModal()">
+        <div class="custom-modal-box text-left space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-bold text-white">Terms of Service</h3>
+                <button type="button" onclick="closeTermsModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer leading-none">&times;</button>
+            </div>
+            <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                <p>Welcome to ChargeClaims. By accessing our platform or connecting your Shopify store, you agree to these terms.</p>
+                <p><strong>1. Service Usage:</strong> ChargeClaims provides automated dispute management, evidence compilation, and fraud intelligence alerts.</p>
+                <p><strong>2. Subscriptions & Billing:</strong> Subscription fees are billed monthly in advance according to your selected tier. The Cross-Merchant Fraud Shield is included free of charge.</p>
+                <p><strong>3. Limitation of Liability:</strong> While our AI maximizes win rates, ChargeClaims does not guarantee 100% success on all bank chargeback decisions.</p>
+            </div>
+            <div class="pt-4 border-t border-slate-800 text-right">
+                <button type="button" onclick="closeTermsModal()" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript - Doğrudan Inline Style Kontrolü -->
+    <script>
+        function openModal() {
+            var modal = document.getElementById('demoModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('demoModal');
+            var form = document.getElementById('demoForm');
+            var success = document.getElementById('successMessage');
+            if (modal) modal.style.display = 'none';
+            if (form) {
+                form.reset();
+                form.style.display = 'block';
+            }
+            if (success) success.style.display = 'none';
+        }
+
+        function openPrivacyModal() {
+            var modal = document.getElementById('privacyModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closePrivacyModal() {
+            var modal = document.getElementById('privacyModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function openTermsModal() {
+            var modal = document.getElementById('termsModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeTermsModal() {
+            var modal = document.getElementById('termsModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        async function submitDemo(e) {
+            e.preventDefault();
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var store_url = document.getElementById('store_url').value;
+            var btn = document.getElementById('submitBtn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            try {
+                var response = await fetch('/api/request-demo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name, email: email, store_url: store_url })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('demoForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
+            } catch (err) {
+                alert('Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Activate Free Access';
+            }
+        }
+    </script>
+</body>
+</html>

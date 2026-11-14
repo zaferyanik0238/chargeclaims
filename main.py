@@ -2,7 +2,7 @@ import hashlib
 from datetime import datetime, timedelta
 from typing import Optional
 from fastapi import FastAPI, Request, HTTPException, Depends
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Float, Boolean
@@ -129,14 +129,13 @@ class RiskCheckRequest(BaseModel):
 
 
 # ---------------------------------------------------------
-# 5. SAYFA ROTALARI (CACHE ENGELLEMELİ)
+# 5. SAYFA VE AJAN SCRIPT ROTALARI
 # ---------------------------------------------------------
 @app.get("/", response_class=HTMLResponse)
 async def serve_home():
     try:
         with open("index.html", "r", encoding="utf-8") as f:
             html_content = f.read()
-        # Tarayıcı önbelleğini engelleyen başlıklar (Butonların her zaman güncel kalmasını sağlar)
         headers = {
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
@@ -145,6 +144,21 @@ async def serve_home():
         return HTMLResponse(content=html_content, headers=headers)
     except FileNotFoundError:
         return HTMLResponse(content="<h1>index.html bulunamadi</h1>", status_code=404)
+
+
+@app.get("/shield.js", response_class=PlainTextResponse)
+async def serve_shield_script():
+    """Shopify mağazalarının tema içine tek satırla ekleyeceği JavaScript ajan dosyası"""
+    try:
+        with open("shield.js", "r", encoding="utf-8") as f:
+            js_content = f.read()
+        headers = {
+            "Cache-Control": "public, max-age=3600",
+            "Content-Type": "application/javascript; charset=utf-8"
+        }
+        return PlainTextResponse(content=js_content, headers=headers)
+    except FileNotFoundError:
+        return PlainTextResponse(content="console.error('ChargeClaims Shield script not found.');", status_code=404, media_type="application/javascript")
 
 
 @app.get("/admin", response_class=HTMLResponse)
@@ -181,7 +195,6 @@ async def serve_admin(db: Session = Depends(get_db)):
                 <a href="/" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-xs font-semibold">Back to Website</a>
             </div>
 
-            <!-- İstatistik Kartları -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                     <div class="text-xs text-slate-400 uppercase">Total Demo Leads</div>
@@ -197,7 +210,6 @@ async def serve_admin(db: Session = Depends(get_db)):
                 </div>
             </div>
 
-            <!-- Demo Talepleri -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                 <div class="p-4 border-b border-slate-800 font-bold text-white">Recent Demo & Trial Requests</div>
                 <table class="w-full text-left text-sm">
@@ -208,7 +220,6 @@ async def serve_admin(db: Session = Depends(get_db)):
                 </table>
             </div>
 
-            <!-- Ortak Ağ Dolandırıcılık Sinyalleri -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                 <div class="p-4 border-b border-slate-800 font-bold text-white flex justify-between items-center">
                     <span>Cross-Merchant Fraud Shield Signals</span>
@@ -297,7 +308,6 @@ async def check_checkout_risk(payload: RiskCheckRequest, request: Request, db: S
         phone_hits = db.query(FraudSignal).filter(FraudSignal.phone_hash == p_hash).all()
         matched_signals.extend(phone_hits)
 
-    # Tekrar eden kayıtları benzersiz ID'ye göre filtrele
     unique_signals = {s.id: s for s in matched_signals}.values()
 
     if unique_signals:
@@ -343,7 +353,6 @@ async def check_checkout_risk(payload: RiskCheckRequest, request: Request, db: S
     else:
         decision = "ALLOW"
 
-    # Sorguyu logla (Velocity havuzunu besler)
     check_log = CheckoutCheckLog(
         merchant_domain=merchant,
         ip_address=client_ip,
